@@ -4,8 +4,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
 const PORT = 5005;
-const Cohort = require("./models/Cohort.model")
-const Student = require("./models/Student.model")
+const Cohort = require("./models/Cohort.model");
+const Student = require("./models/Student.model");
+const User = require("./models/User.model");
+const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 
 // STATIC DATA
@@ -41,11 +43,20 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+const allRoutes = require("./routes");
+app.use("/api", allRoutes);
+
 const cohortRouter = require("./routes/cohort.routes");
 app.use("/api/cohorts", cohortRouter);
 
 const studentRouter = require("./routes/student.routes");
 app.use("/api/students", studentRouter);
+
+const userRouter = require("./routes/user.routes");
+app.use("/api/users", isAuthenticated, userRouter)
+
+const authRouter = require("./routes/auth.routes");
+app.use("/auth", authRouter);
 
 
 // ERROR HANDLING - always set up last!
