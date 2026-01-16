@@ -7,9 +7,8 @@ const PORT = 5005;
 const Cohort = require("./models/Cohort.model")
 const Student = require("./models/Student.model")
 
+
 // STATIC DATA
-// Devs Team - Import the provided files with JSON data of students and cohorts here:
-// ...
 const cohorts = require("./cohorts.json");
 const students = require("./students.json");
 
@@ -18,7 +17,7 @@ const students = require("./students.json");
 const app = express();
 
 
-//connecting to mongoose
+// CONNECT TO DATABASE
 mongoose
 .connect('mongodb://127.0.0.1:27017/cohort-tools-api')
 .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
@@ -26,8 +25,6 @@ mongoose
 
 
 // MIDDLEWARE
-// Research Team - Set up CORS middleware here:
-// ...
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("public"));
@@ -40,19 +37,23 @@ app.use(cors({
 
 
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
-// Devs Team - Start working on the routes here:
-// ...
 app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
-app.get("/api/cohorts", (req, res) => {
-  res.json(cohorts)
-});
+const cohortRouter = require("./routes/cohort.routes");
+app.use("/api/cohorts", cohortRouter);
 
-app.get("/api/students", (req, res) => {
-  res.json(students)
-});
+const studentRouter = require("./routes/student.routes");
+app.use("/api/students", studentRouter);
+
+
+// ERROR HANDLING - always set up last!
+const { errorHandler, notFoundHandler } = require('./middleware/error-handling');
+
+app.use(notFoundHandler);
+app.use(errorHandler);
+
 
 // START SERVER
 app.listen(PORT, () => {
