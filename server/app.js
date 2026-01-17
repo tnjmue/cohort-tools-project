@@ -43,11 +43,9 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
-const allRoutes = require("./routes");
-app.use("/api", allRoutes);
 
 const cohortRouter = require("./routes/cohort.routes");
-app.use("/api/cohorts", cohortRouter);
+app.use("/api/cohorts", cohortRouter); 
 
 const studentRouter = require("./routes/student.routes");
 app.use("/api/students", studentRouter);
