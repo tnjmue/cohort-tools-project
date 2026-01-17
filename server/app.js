@@ -2,8 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 const mongoose = require('mongoose');
-const PORT = 5005;
+const PORT = process.env.PORT;
 const Cohort = require("./models/Cohort.model");
 const Student = require("./models/Student.model");
 const User = require("./models/User.model");
@@ -65,6 +66,7 @@ app.use(errorHandler);
 
 
 // START SERVER
+console.log("PORT:", process.env.PORT);
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
