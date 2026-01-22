@@ -12,8 +12,8 @@ const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 
 // STATIC DATA
-const cohorts = require("./cohorts.json");
-const students = require("./students.json");
+/* const cohorts = require("./cohorts.json");
+const students = require("./students.json"); */
 
 
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
