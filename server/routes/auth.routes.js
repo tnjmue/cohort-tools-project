@@ -43,7 +43,7 @@ router.post('/signup', (req, res, next) => {
                 return;
             }
 
-            // If the email is unique, proceed to hash the password
+            // If email is unique --> hash the password
             const salt = bcrypt.genSaltSync(saltRounds);
             const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -52,8 +52,8 @@ router.post('/signup', (req, res, next) => {
         })
 
         .then((createdUser) => {
-      // Deconstruct the newly created user object to omit the password
-      // We should never expose passwords publicly
+
+      // Deconstruct the newly created user object to remove password
       if (createdUser) {
 
           const { email, name, _id } = createdUser;
