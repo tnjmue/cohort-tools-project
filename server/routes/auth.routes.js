@@ -52,16 +52,19 @@ router.post('/signup', (req, res, next) => {
         })
 
         .then((createdUser) => {
-        // Deconstruct the newly created user object to omit the password
-        // We should never expose passwords publicly
-         const { email, name, _id } = createdUser;
+      // Deconstruct the newly created user object to omit the password
+      // We should never expose passwords publicly
+      if (createdUser) {
 
-        // Create a new object that doesn't expose the password
-        const user = { email, name, _id };
-
-        // Send a json response containing the user object
-        res.status(201).json({ user: user });
-        })
+          const { email, name, _id } = createdUser;
+          
+          // Create a new object that doesn't expose the password
+          const user = { email, name, _id };
+          
+          // Send a json response containing the user object
+          res.status(201).json({ user: user });
+        }
+    })
 
         .catch(err => {
             console.error("Failed to create new user", err);
