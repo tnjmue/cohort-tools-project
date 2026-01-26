@@ -34,7 +34,7 @@ router.get('/:cohortId', (req, res) => {
 })
 
 // PUT /api/cohorts/:cohortId - Updates a specific cohort by id
-router.put('/cohortId', (req, res) => {
+router.put('/:cohortId', (req, res) => {
     const { cohortId } = req.params;
     Cohort.findByIdAndUpdate(cohortId, req.body, {new: true})
     .then(cohort => res.status(200).json(cohort))
